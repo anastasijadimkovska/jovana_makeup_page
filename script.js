@@ -10,9 +10,17 @@ document.addEventListener('DOMContentLoaded', function () {
   
     // 🔁 Reusable modal toggle function
     function toggleModal(modal, isOpen) {
-      modal.classList.toggle('hidden', !isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : 'auto';
-    }
+        if (isOpen) {
+          modal.classList.remove('hidden');
+          modal.style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        } else {
+          modal.classList.add('hidden');
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+      }
+      
   
     // 🖱️ Click triggers
     if (appointmentSection && calendlyPopup) {
