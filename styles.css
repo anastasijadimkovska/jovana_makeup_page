@@ -216,3 +216,86 @@ footer {
     color: #000;  
     cursor: pointer;
 }
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header, .categories, footer, .footer-content {
+        text-align: center; /* Centers content for smaller screens */
+    }
+
+    .logo {
+        width: 180px; /* Reduces the logo size on smaller screens */
+        margin: 0 auto; /* Ensures logo is centered */
+    }
+
+    .categories {
+        flex-direction: column; /* Stacks navigation items vertically */
+        padding: 5px 0; /* Reduces padding */
+    }
+
+    nav.categories {
+        margin-top: 10px; /* Adjusts margin */
+        margin-bottom: 20px; /* Provides more space below the nav */
+    }
+
+    main {
+        flex-direction: column; /* Stacks main sections vertically */
+        height: auto; /* Adjusts height to fit content */
+    }
+
+    .home-section {
+        padding: 15px; /* Adds padding to each section for better touch interaction */
+        font-size: 1.5em; /* Reduces font size for better readability */
+    }
+
+    .about-me {
+        flex-direction: column; /* Stacks elements vertically in the about section */
+        padding: 20px; /* Adds more padding for readability */
+    }
+
+    .about-icon {
+        width: 40px; /* Adjusts icon size */
+        height: 40px; /* Maintains aspect ratio */
+    }
+
+    .about-content h2, .about-content p {
+        text-align: center; /* Centers text for better focus */
+    }
+
+    #calendlyPopup, #portfolioModal {
+        width: 90%; /* Adjusts width to give some margin around the modal */
+        height: auto; /* Auto-adjusts height based on content */
+        max-height: 90%; /* Limits the max height to avoid overflow */
+        overflow-y: auto; /* Adds scroll to modals if content exceeds the height */
+    }
+
+    .modal-content {
+        width: 100%; /* Full width within the modal for better utilization of space */
+        height: auto; /* Auto height for dynamic content size */
+    }
+
+    .footer-content {
+        flex-direction: column; /* Stacks footer content vertically */
+        align-items: center; /* Ensures that all footer content is centered */
+    }
+
+    .footer-section {
+        width: 100%; /* Forces footer sections to take full width */
+        min-width: auto; /* Removes minimum width restriction */
+        margin: 10px 0; /* Adjusts margin for vertical stacking */
+        align-items: center; /* Center-aligns content within each section */
+        text-align: center; /* Ensures text within each section is centered */
+    }
+
+    .footer-section h3, .footer-section ul li a {
+        font-size: 14px; /* Slightly reduces font size for space efficiency */
+    }
+
+    .footer-section ul {
+        justify-content: center; /* Centers list items */
+        padding: 0; /* Removes padding */
+    }
+
+    .footer-section a img {
+        margin: 0 auto; /* Centers images within links */
+    }
+}
