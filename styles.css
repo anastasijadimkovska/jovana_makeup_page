@@ -1,0 +1,218 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Cormorant SC', serif;
+    background-color: #d6b4c4; /* The logo's background color */
+    overflow-x: hidden; /* Prevents horizontal scroll */
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+.logo {
+    width: 350px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.categories {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    font-family: 'Cantata One', serif;
+    font-size: 1.2em;
+    color: #333;
+}
+
+main {
+    display: flex;
+    height: calc(100vh - 150px); /* Adjust height depending on header/nav size */
+}
+nav.categories {
+    margin-top: 0; /* Reduce top margin, or adjust as necessary */
+    margin-bottom: 3%;
+    padding-top: 10px; /* Add or reduce padding at the top */
+}
+
+
+.home-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+    color: white;
+    font-size: 2em;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#portfolioSection {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.4), transparent);
+}
+
+#appointmentSection {
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.4), transparent);
+}
+
+#portfolioSection:hover, #appointmentSection:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.hidden {
+    display: none;
+}
+.about-me {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 20px;
+    background-color: #fff; /* Adjust according to your site's color scheme */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-icon {
+    width: 50px; /* Adjust size as needed to make it look like an icon */
+    height: 50px;
+    border-radius: 50%; /* Makes the image circular */
+    margin-right: 15px;
+}
+
+.about-content h2 {
+    color: #333; /* Adjust text color as needed */
+    margin-bottom: 10px;
+}
+
+.about-content p {
+    color: #666; /* Adjust text color as needed */
+    font-size: 16px; /* Adjust font size as needed */
+}
+
+
+#calendlyPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 1000;
+}
+
+footer {
+    background-color: #d6b4c4;
+    color: #4a2c35;
+    text-align: center;
+    padding: 30px 0;
+    font-family: 'Cantata One', serif;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.footer-section h3 {
+    color: #7a4151;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.footer-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-section ul li a {
+    color: #4a2c35;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #a35c75;
+}
+
+.footer-section a img {
+    width: 26px;
+    margin: 5px;
+    filter: grayscale(100%) brightness(0.8);
+    transition: filter 0.3s ease;
+}
+
+.footer-section a img:hover {
+    filter: grayscale(0%) brightness(1);
+}
+
+.footer-bottom {
+    font-size: 0.9em;
+    opacity: 0.7;
+    margin-top: 15px;
+}
+
+/* Responsive Magic */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+#portfolioModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);  
+    z-index: 1050;  
+    visibility: hidden;  
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+#portfolioModal.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+
+#portfolioModal:not(.hidden) {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-content {
+    position: relative;
+    width: 80%;  
+    height: 80%;  
+    background-color: #fff;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1060; 
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    color: #000;  
+    cursor: pointer;
+}
