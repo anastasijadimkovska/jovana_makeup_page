@@ -1,63 +1,74 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Elements
     const appointmentSection = document.getElementById('appointmentSection');
     const calendlyPopup = document.getElementById('calendlyPopup');
     const portfolioSection = document.getElementById('portfolioSection');
     const portfolioModal = document.getElementById('portfolioModal');
-    const closeBtns = document.querySelectorAll('.close'); // This selects all close buttons
+    const closeBtns = document.querySelectorAll('.close');
     const images = document.querySelectorAll('.portfolio-item');
-
-    // Function to toggle modals
+    const closeCalendly = document.getElementById('closeCalendly');
+  
+    // 🔁 Reusable modal toggle function
     function toggleModal(modal, isOpen) {
-        modal.classList.toggle('hidden', !isOpen);
-        document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+      modal.classList.toggle('hidden', !isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : 'auto';
     }
-
-    // Add event listeners to modal sections to open modals
+  
+    // 🖱️ Click triggers
     if (appointmentSection && calendlyPopup) {
-        appointmentSection.addEventListener('click', () => toggleModal(calendlyPopup, true));
+      appointmentSection.addEventListener('click', () => toggleModal(calendlyPopup, true));
     }
-
+  
     if (portfolioSection && portfolioModal) {
-        portfolioSection.addEventListener('click', () => toggleModal(portfolioModal, true));
+      portfolioSection.addEventListener('click', () => toggleModal(portfolioModal, true));
     }
-
-    // Close modals on clicking the close button or outside the modal content
+  
+    // ❌ Close buttons
     closeBtns.forEach(btn => {
-        btn.addEventListener('click', () => toggleModal(btn.closest('.modal-content').parentNode, false));
+      btn.addEventListener('click', () => {
+        toggleModal(btn.closest('.modal-content').parentNode, false);
+      });
     });
-
-    // Handle clicking outside the modals
-    window.addEventListener('click', function(event) {
-        if (calendlyPopup && !calendlyPopup.hidden && !calendlyPopup.contains(event.target) && event.target !== appointmentSection) {
-            toggleModal(calendlyPopup, false);
-        }
-        if (portfolioModal && !portfolioModal.hidden && event.target === portfolioModal) {
-            toggleModal(portfolioModal, false);
-        }
-    });
-
-    // Optional: Lightbox functionality for portfolio images
-    if (images.length > 0) {
-        const lightbox = document.createElement('div');
-        lightbox.id = 'lightbox';
-        lightbox.className = 'lightbox';
-        document.body.appendChild(lightbox);
-
-        const img = document.createElement('img');
-        lightbox.appendChild(img);
-
-        images.forEach(image => {
-            image.addEventListener('click', () => {
-                lightbox.style.display = 'flex';
-                img.src = image.src; // Display the clicked image in a lightbox
-            });
-        });
-
-        lightbox.addEventListener('click', e => {
-            if (e.target !== img) {
-                lightbox.style.display = 'none'; // Close the lightbox when clicking outside the image
-            }
-        });
+  
+    // ❌ Special closeCalendly using same toggle
+    if (closeCalendly && calendlyPopup) {
+      closeCalendly.addEventListener('click', () => toggleModal(calendlyPopup, false));
     }
-});
+  
+    // 🧱 Click outside modal closes it
+    window.addEventListener('click', function (event) {
+      if (calendlyPopup && !calendlyPopup.classList.contains('hidden') &&
+          event.target === calendlyPopup) {
+        toggleModal(calendlyPopup, false);
+      }
+      if (portfolioModal && !portfolioModal.classList.contains('hidden') &&
+          event.target === portfolioModal) {
+        toggleModal(portfolioModal, false);
+      }
+    });
+  
+    // 💡 Lightbox image click
+    if (images.length > 0) {
+      const lightbox = document.createElement('div');
+      lightbox.id = 'lightbox';
+      lightbox.className = 'lightbox';
+      document.body.appendChild(lightbox);
+  
+      const img = document.createElement('img');
+      lightbox.appendChild(img);
+  
+      images.forEach(image => {
+        image.addEventListener('click', () => {
+          lightbox.style.display = 'flex';
+          img.src = image.src;
+        });
+      });
+  
+      lightbox.addEventListener('click', e => {
+        if (e.target !== img) {
+          lightbox.style.display = 'none';
+        }
+      });
+    }
+  });
+  
