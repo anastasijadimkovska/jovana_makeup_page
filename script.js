@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeBtns = document.querySelectorAll('.close');
   const closeCalendly = document.getElementById('closeCalendly');
 
-  // 🔁 Modal toggle
   function toggleModal(modal, isOpen) {
     if (isOpen) {
       modal.classList.remove('hidden');
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // 🖱️ Click triggers
   if (appointmentSection && calendlyPopup) {
     appointmentSection.addEventListener('click', () => toggleModal(calendlyPopup, true));
   }
@@ -29,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
     portfolioSection.addEventListener('click', () => toggleModal(portfolioModal, true));
   }
 
-  // ❌ Close buttons
   closeBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       toggleModal(btn.closest('.modal-content').parentNode, false);
@@ -40,35 +37,44 @@ document.addEventListener('DOMContentLoaded', function () {
     closeCalendly.addEventListener('click', () => toggleModal(calendlyPopup, false));
   }
 
-  // 🧱 Click outside modal closes it
   window.addEventListener('click', function (event) {
-    if (calendlyPopup && !calendlyPopup.classList.contains('hidden') &&
-        event.target === calendlyPopup) {
+    if (calendlyPopup && !calendlyPopup.classList.contains('hidden') && event.target === calendlyPopup) {
       toggleModal(calendlyPopup, false);
     }
-    if (portfolioModal && !portfolioModal.classList.contains('hidden') &&
-        event.target === portfolioModal) {
+    if (portfolioModal && !portfolioModal.classList.contains('hidden') && event.target === portfolioModal) {
       toggleModal(portfolioModal, false);
     }
   });
 
   // 🎯 Load portfolio images from Google Drive via CORS proxy
   fetch('https://api.allorigins.win/raw?url=https://script.google.com/macros/s/AKfycbyvt3Oo_NEnfWA6Y49fLgSipiqkRX6EzeZvb4Fcc01uLqM0g3WgEWLCmGM0eGXtfxxX/exec')
-    .then(res => res.text()) // grab text first in case it's stringified
+    .then(res => res.text())
     .then(raw => {
       let data;
       try {
         data = JSON.parse(raw);
       } catch (e) {
         console.error("❌ Failed to parse data:", e);
-        console.log("💬 Raw string:", raw);
+        console.log("💬 Raw string from Google:", raw);
         return;
       }
 
       console.log("📸 PARSED DATA FROM DRIVE:", data);
 
-      if (!Array.isArray(data)) {
-        console.error("❌ This ain’t no array. It's a", typeof data);
+      // 💡 Handle if response is object, not array
+      let imageArray;
+      if (Array.isArray(data)) {
+        imageArray = data;
+      } else if (data && typeof data === 'object') {
+        // Maybe data.images or just values from object
+        imageArray = data.images || Object.values(data);
+      } else {
+        console.error("❌ Unknown data structure:", data);
+        return;
+      }
+
+      if (!Array.isArray(imageArray)) {
+        console.error("❌ Final image list is not an array:", imageArray);
         return;
       }
 
@@ -86,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const lightboxImg = document.createElement('img');
       lightbox.appendChild(lightboxImg);
 
-      data.forEach(imageURL => {
+      imageArray.forEach(imageURL => {
         const img = document.createElement('img');
         img.src = imageURL;
         img.alt = "Makeup Image";
@@ -106,6 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     })
     .catch(error => {
-      console.error("❌ Failed to fetch from Google Script:", error);
+      console.error("❌ Fetch failed:", error);
     });
 });
