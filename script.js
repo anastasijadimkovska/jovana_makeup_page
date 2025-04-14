@@ -54,9 +54,12 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // 🎯 Load portfolio images from Google Drive
-  fetch('https://corsproxy.io/?https://script.google.com/macros/s/AKfycbyvt3Oo_NEnfWA6Y49fLgSipiqkRX6EzeZvb4Fcc01uLqM0g3WgEWLCmGM0eGXtfxxX/exec')
+  fetch('https://api.allorigins.win/raw?url=https://script.google.com/macros/s/AKfycbyvt3Oo_NEnfWA6Y49fLgSipiqkRX6EzeZvb4Fcc01uLqM0g3WgEWLCmGM0eGXtfxxX/exec')
+
     .then(res => res.json())
     .then(data => {
+      console.log("📸 Image data from Drive:", data);
+
       const container = document.querySelector('.portfolio-grid');
       const lightbox = document.createElement('div');
       lightbox.id = 'lightbox';
