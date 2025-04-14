@@ -48,70 +48,71 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 🎯 Load portfolio images from Google Drive via CORS proxy
   fetch('https://api.allorigins.win/raw?url=https://script.google.com/macros/s/AKfycbyvt3Oo_NEnfWA6Y49fLgSipiqkRX6EzeZvb4Fcc01uLqM0g3WgEWLCmGM0eGXtfxxX/exec')
-    .then(res => res.text())
-    .then(raw => {
-      let data;
-      try {
-        data = JSON.parse(raw);
-      } catch (e) {
-        console.error("❌ Failed to parse data:", e);
-        console.log("💬 Raw string from Google:", raw);
-        return;
-      }
+  .then(res => res.text())
+  .then(raw => {
+    console.log("💬 RAW string from Google Drive:", raw);  // <-- this gotta show up
 
-      console.log("📸 PARSED DATA FROM DRIVE:", data);
+    let data;
+    try {
+      data = JSON.parse(raw);
+      console.log("✅ JSON PARSED SUCCESSFULLY:", data); // <-- and this
+    } catch (e) {
+      console.error("❌ JSON PARSE FAILED:", e);
+      return;
+    }
 
-      // 💡 Handle if response is object, not array
-      let imageArray;
-      if (Array.isArray(data)) {
-        imageArray = data;
-      } else if (data && typeof data === 'object') {
-        // Maybe data.images or just values from object
-        imageArray = data.images || Object.values(data);
-      } else {
-        console.error("❌ Unknown data structure:", data);
-        return;
-      }
+    let imageArray;
 
-      if (!Array.isArray(imageArray)) {
-        console.error("❌ Final image list is not an array:", imageArray);
-        return;
-      }
+    if (Array.isArray(data)) {
+      imageArray = data;
+    } else if (data && typeof data === 'object') {
+      console.warn("⚠️ Data is an object. Trying Object.values()...");
+      imageArray = data.images || Object.values(data); // images field OR fallback
+    } else {
+      console.error("❌ Unexpected data format:", typeof data);
+      return;
+    }
 
-      const container = document.querySelector('.portfolio-grid');
-      if (!container) {
-        console.error("❌ Could not find .portfolio-grid container.");
-        return;
-      }
+    if (!Array.isArray(imageArray)) {
+      console.error("❌ Still not an array. Final value:", imageArray);
+      return;
+    }
 
-      const lightbox = document.createElement('div');
-      lightbox.id = 'lightbox';
-      lightbox.className = 'lightbox';
-      document.body.appendChild(lightbox);
+    const container = document.querySelector('.portfolio-grid');
+    if (!container) {
+      console.error("❌ Could not find .portfolio-grid");
+      return;
+    }
 
-      const lightboxImg = document.createElement('img');
-      lightbox.appendChild(lightboxImg);
+    const lightbox = document.createElement('div');
+    lightbox.id = 'lightbox';
+    lightbox.className = 'lightbox';
+    document.body.appendChild(lightbox);
 
-      imageArray.forEach(imageURL => {
-        const img = document.createElement('img');
-        img.src = imageURL;
-        img.alt = "Makeup Image";
-        img.classList.add('portfolio-item');
-        container.appendChild(img);
+    const lightboxImg = document.createElement('img');
+    lightbox.appendChild(lightboxImg);
 
-        img.addEventListener('click', () => {
-          lightbox.style.display = 'flex';
-          lightboxImg.src = img.src;
-        });
+    imageArray.forEach(url => {
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = "Makeup Image";
+      img.classList.add('portfolio-item');
+      container.appendChild(img);
+
+      img.addEventListener('click', () => {
+        lightbox.style.display = 'flex';
+        lightboxImg.src = img.src;
       });
-
-      lightbox.addEventListener('click', e => {
-        if (e.target !== lightboxImg) {
-          lightbox.style.display = 'none';
-        }
-      });
-    })
-    .catch(error => {
-      console.error("❌ Fetch failed:", error);
     });
+
+    lightbox.addEventListener('click', e => {
+      if (e.target !== lightboxImg) {
+        lightbox.style.display = 'none';
+      }
+    });
+  })
+  .catch(error => {
+    console.error("❌ Fetch completely failed:", error);
+  });
+
 });
