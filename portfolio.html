@@ -13,40 +13,56 @@
   </div>
 
   <script>
-    fetch('https://api.allorigins.win/raw?url=https://script.google.com/macros/s/AKfycbyIEshjKcajK1jnH9ZKcpHN2TFWYBFm0A8-7VjuGXyYRr1_e_RVZQsIduliKayR7e4p/exec')
-      .then(res => res.text())
-      .then(raw => {
-        let data;
-        try {
-          data = JSON.parse(raw);
-        } catch (e) {
-          console.error("❌ JSON parse failed:", e);
-          return;
-        }
-
-        const container = document.querySelector('.portfolio-grid');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = lightbox.querySelector('img');
-
-        data.forEach(url => {
-          const img = document.createElement('img');
-          img.src = url;
-          img.alt = "Makeup Image";
-          img.classList.add('portfolio-item');
-          container.appendChild(img);
-
-          img.addEventListener('click', () => {
-            lightbox.style.display = 'flex';
-            lightboxImg.src = img.src;
-          });
-        });
-
-        lightbox.addEventListener('click', (e) => {
-          if (e.target !== lightboxImg) {
-            lightbox.style.display = 'none';
+    document.addEventListener('DOMContentLoaded', function () {
+      fetch('https://api.allorigins.win/raw?url=https%3A%2F%2Fscript.google.com%2Fmacros%2Fs%2FAKfycbyIEshjKcajK1jnH9ZKcpHN2TFWYBFm0A8-7VjuGXyYRr1_e_RVZQsIduliKayR7e4p%2Fexec')
+        .then(res => res.text())
+        .then(raw => {
+          let data;
+          try {
+            data = JSON.parse(raw);
+          } catch (e) {
+            console.error("❌ JSON Parse Error:", e);
+            return;
           }
+  
+          const container = document.querySelector('.portfolio-grid');
+          if (!container) {
+            console.error("❌ .portfolio-grid not found!");
+            return;
+          }
+  
+          const lightbox = document.createElement('div');
+          lightbox.id = 'lightbox';
+          lightbox.className = 'lightbox';
+          document.body.appendChild(lightbox);
+  
+          const lightboxImg = document.createElement('img');
+          lightbox.appendChild(lightboxImg);
+  
+          data.forEach(url => {
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = "Makeup Image";
+            img.classList.add('portfolio-item');
+            container.appendChild(img);
+  
+            img.addEventListener('click', () => {
+              lightbox.style.display = 'flex';
+              lightboxImg.src = img.src;
+            });
+          });
+  
+          lightbox.addEventListener('click', e => {
+            if (e.target !== lightboxImg) {
+              lightbox.style.display = 'none';
+            }
+          });
+        })
+        .catch(error => {
+          console.error("❌ Fetch Error:", error);
         });
-      });
+    });
   </script>
+  
 </body>
 </html>
