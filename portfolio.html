@@ -6,9 +6,47 @@
   <link rel="stylesheet" href="portfolio.css">
 </head>
 <body>
-  <!-- 💄 This is where the images will go -->
   <div class="portfolio-grid"></div>
-  
-  <script src="script.js"></script>
+
+  <div id="lightbox" class="lightbox">
+    <img src="" alt="Preview">
+  </div>
+
+  <script>
+    fetch('https://api.allorigins.win/raw?url=https://script.google.com/macros/s/AKfycbyIEshjKcajK1jnH9ZKcpHN2TFWYBFm0A8-7VjuGXyYRr1_e_RVZQsIduliKayR7e4p/exec')
+      .then(res => res.text())
+      .then(raw => {
+        let data;
+        try {
+          data = JSON.parse(raw);
+        } catch (e) {
+          console.error("❌ JSON parse failed:", e);
+          return;
+        }
+
+        const container = document.querySelector('.portfolio-grid');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+
+        data.forEach(url => {
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = "Makeup Image";
+          img.classList.add('portfolio-item');
+          container.appendChild(img);
+
+          img.addEventListener('click', () => {
+            lightbox.style.display = 'flex';
+            lightboxImg.src = img.src;
+          });
+        });
+
+        lightbox.addEventListener('click', (e) => {
+          if (e.target !== lightboxImg) {
+            lightbox.style.display = 'none';
+          }
+        });
+      });
+  </script>
 </body>
 </html>
