@@ -1,9 +1,10 @@
+/* ================== GLOBAL ================== */
 body, html {
     margin: 0;
     padding: 0;
     font-family: 'Cormorant SC', serif;
-    background-color: #d6b4c4; /* The logo's background color */
-    overflow-x: hidden; /* Prevents horizontal scroll */
+    background-color: #d6b4c4;
+    overflow-x: hidden;
 }
 
 header {
@@ -26,16 +27,16 @@ header {
     color: #333;
 }
 
-main {
-    display: flex;
-    height: calc(100vh - 150px); /* Adjust height depending on header/nav size */
-}
 nav.categories {
-    margin-top: 0; /* Reduce top margin, or adjust as necessary */
+    margin-top: 0;
     margin-bottom: 3%;
-    padding-top: 10px; /* Add or reduce padding at the top */
+    padding-top: 10px;
 }
 
+main {
+    display: flex;
+    height: calc(100vh - 150px);
+}
 
 .home-section {
     flex: 1;
@@ -65,80 +66,89 @@ nav.categories {
 .hidden {
     display: none;
 }
+
+/* ================== ABOUT SECTION ================== */
 .about-me {
     display: flex;
     align-items: center;
     justify-content: start;
     padding: 20px;
-    background-color: #fff; /* Adjust according to your site's color scheme */
+    background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .about-icon {
-    width: 50px; /* Adjust size as needed to make it look like an icon */
+    width: 50px;
     height: 50px;
-    border-radius: 50%; /* Makes the image circular */
+    border-radius: 50%;
     margin-right: 15px;
 }
 
 .about-content h2 {
-    color: #333; /* Adjust text color as needed */
+    color: #333;
     margin-bottom: 10px;
 }
 
 .about-content p {
-    color: #666; /* Adjust text color as needed */
-    font-size: 16px; /* Adjust font size as needed */
+    color: #666;
+    font-size: 16px;
 }
 
-
+/* ================== MODAL (DESKTOP & DEFAULT) ================== */
+#portfolioModal,
 #calendlyPopup {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0,0,0,0.8);
+    background: rgba(0, 0, 0, 0.85);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-  }
-  
-  #calendlyPopup.hidden {
+}
+
+#portfolioModal.hidden,
+#calendlyPopup.hidden {
     display: none;
-  }
-  
-  #calendlyPopup .modal-content {
-    position: relative;
-    width: 90vw;
-    max-width: 900px;
-    height: 90vh;
+}
+
+.modal-content {
     background: #fff;
-    border-radius: 10px;
+    width: 90vw;
+    height: 90vh;
+    border-radius: 12px;
     overflow: hidden;
+    position: relative;
     display: flex;
     flex-direction: column;
-  }
-  
-  #calendlyPopup iframe {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.modal-content iframe {
+    flex: 1;
     width: 100%;
     height: 100%;
     border: none;
-  }
-  
-  /* ✖️ Close button */
-  #closeCalendly {
+    display: block;
+}
+
+/* ✖️ Close button */
+.close,
+#closeCalendly {
     position: absolute;
     top: 10px;
     right: 15px;
-    font-size: 28px;
+    font-size: 26px;
     color: #000;
     cursor: pointer;
-    z-index: 999;
-  }
+    z-index: 10001;
+}
 
+/* ================== FOOTER ================== */
 footer {
     background-color: #d6b4c4;
     color: #4a2c35;
@@ -201,210 +211,108 @@ footer {
     margin-top: 15px;
 }
 
-/* Responsive Magic */
-@media (max-width: 768px) {
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-    }
-}
-#portfolioModal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.8);  
-    z-index: 1050;  
-    visibility: hidden;  
-    opacity: 0;
-    transition: opacity 0.4s;
-}
-
-#portfolioModal.hidden {
-    visibility: hidden;
-    opacity: 0;
-}
-
-#portfolioModal:not(.hidden) {
-    visibility: visible;
-    opacity: 1;
-}
-
-.modal-content {
-    position: relative;
-    width: 80%;  
-    height: 80%;  
-    background-color: #fff;  
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1060; 
-}
-
-.close {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 30px;
-    color: #000;  
-    cursor: pointer;
-}
-/* Responsive adjustments */
+/* ================== MOBILE LOVE ================== */
 @media (max-width: 768px) {
     header, .categories, footer, .footer-content {
-        text-align: center; /* Centers content for smaller screens */
+        text-align: center;
     }
 
     .logo {
-        width: 180px; /* Reduces the logo size on smaller screens */
-        margin: 0 auto; /* Ensures logo is centered */
+        width: 180px;
+        margin: 0 auto;
     }
 
     .categories {
-        flex-direction: column; /* Stacks navigation items vertically */
-        padding: 5px 0; /* Reduces padding */
+        flex-direction: column;
+        padding: 5px 0;
     }
 
     nav.categories {
-        margin-top: 10px; /* Adjusts margin */
-        margin-bottom: 20px; /* Provides more space below the nav */
+        margin-top: 10px;
+        margin-bottom: 20px;
     }
 
     main {
-        flex-direction: column; /* Stacks main sections vertically */
-        height: auto; /* Adjusts height to fit content */
+        flex-direction: column;
+        height: auto;
     }
 
     .home-section {
-        padding: 15px; /* Adds padding to each section for better touch interaction */
-        font-size: 1.5em; /* Reduces font size for better readability */
+        padding: 15px;
+        font-size: 1.5em;
     }
 
     .about-me {
-        flex-direction: column; /* Stacks elements vertically in the about section */
-        padding: 20px; /* Adds more padding for readability */
+        flex-direction: column;
+        padding: 20px;
     }
 
     .about-icon {
-        width: 40px; /* Adjusts icon size */
-        height: 40px; /* Maintains aspect ratio */
+        width: 40px;
+        height: 40px;
     }
 
     .about-content h2, .about-content p {
-        text-align: center; /* Centers text for better focus */
+        text-align: center;
     }
 
-    #calendlyPopup, #portfolioModal {
-        width: 90%; /* Adjusts width to give some margin around the modal */
-        height: auto; /* Auto-adjusts height based on content */
-        max-height: 90%; /* Limits the max height to avoid overflow */
-        overflow-y: auto; /* Adds scroll to modals if content exceeds the height */
-    }
-
-    .modal-content {
-        width: 100%; /* Full width within the modal for better utilization of space */
-        height: auto; /* Auto height for dynamic content size */
-    }
-
-    .footer-content {
-        flex-direction: column; /* Stacks footer content vertically */
-        align-items: center; /* Ensures that all footer content is centered */
-    }
-
-    .footer-section {
-        width: 100%; /* Forces footer sections to take full width */
-        min-width: auto; /* Removes minimum width restriction */
-        margin: 10px 0; /* Adjusts margin for vertical stacking */
-        align-items: center; /* Center-aligns content within each section */
-        text-align: center; /* Ensures text within each section is centered */
-    }
-
-    .footer-section h3, .footer-section ul li a {
-        font-size: 14px; /* Slightly reduces font size for space efficiency */
-    }
-
-    .footer-section ul {
-        justify-content: center; /* Centers list items */
-        padding: 0; /* Removes padding */
-    }
-
-    .footer-section a img {
-        margin: 0 auto; /* Centers images within links */
-    }
-    #calendlyPopup, #portfolioModal {
-        width: 95vw;
-        height: 95vh;
+    #calendlyPopup,
+    #portfolioModal {
+        position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        width: 95vw;
+        height: 95vh;
         padding: 10px;
         overflow-y: auto;
         border-radius: 10px;
-        background: rgba(0,0,0,0.9); /* optional: makes modal background look better */
-      }
-      
-      .modal-content {
+        background: rgba(0,0,0,0.9);
+        z-index: 9999;
+    }
+
+    .modal-content {
         width: 100%;
         height: 100%;
         overflow: auto;
         background: #fff;
         border-radius: 10px;
-      }
-      
-      .modal-content iframe {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .modal-content iframe {
         width: 100%;
         height: 100%;
         border: none;
         display: block;
-      }
-      
-}
-/* Base Modal Setup */
-#portfolioModal,
-#calendlyPopup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.85);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
+    }
 
-#portfolioModal.hidden,
-#calendlyPopup.hidden {
-  display: none;
-}
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
 
-.modal-content {
-  background: #fff;
-  width: 90vw;
-  height: 90vh;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
+    .footer-section {
+        width: 100%;
+        min-width: auto;
+        margin: 10px 0;
+        align-items: center;
+        text-align: center;
+    }
 
-.modal-content iframe {
-  border: none;
-  width: 100%;
-  height: 100%;
-  flex: 1;
-}
+    .footer-section h3,
+    .footer-section ul li a {
+        font-size: 14px;
+    }
 
-.close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 26px;
-  color: #000;
-  cursor: pointer;
-  z-index: 10001;
+    .footer-section ul {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .footer-section a img {
+        margin: 0 auto;
+    }
 }
