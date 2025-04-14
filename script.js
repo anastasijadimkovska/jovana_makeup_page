@@ -46,73 +46,72 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // 🎯 Load portfolio images from Google Drive via CORS proxy
-  fetch('https://api.allorigins.win/raw?url=https://script.google.com/macros/s/AKfycbyvt3Oo_NEnfWA6Y49fLgSipiqkRX6EzeZvb4Fcc01uLqM0g3WgEWLCmGM0eGXtfxxX/exec')
-  .then(res => res.text())
-  .then(raw => {
-    console.log("💬 RAW string from Google Drive:", raw);  // <-- this gotta show up
+  // 🎯 Load portfolio images from Google Drive via CORRECT CORS proxy link
+  fetch('https://api.allorigins.win/raw?url=https%3A%2F%2Fscript.google.com%2Fmacros%2Fs%2FAKfycbyIEshjKcajK1jnH9ZKcpHN2TFWYBFm0A8-7VjuGXyYRr1_e_RVZQsIduliKayR7e4p%2Fexec')
+    .then(res => res.text())
+    .then(raw => {
+      console.log("💬 RAW string from Google Drive:", raw);
 
-    let data;
-    try {
-      data = JSON.parse(raw);
-      console.log("✅ JSON PARSED SUCCESSFULLY:", data); // <-- and this
-    } catch (e) {
-      console.error("❌ JSON PARSE FAILED:", e);
-      return;
-    }
-
-    let imageArray;
-
-    if (Array.isArray(data)) {
-      imageArray = data;
-    } else if (data && typeof data === 'object') {
-      console.warn("⚠️ Data is an object. Trying Object.values()...");
-      imageArray = data.images || Object.values(data); // images field OR fallback
-    } else {
-      console.error("❌ Unexpected data format:", typeof data);
-      return;
-    }
-
-    if (!Array.isArray(imageArray)) {
-      console.error("❌ Still not an array. Final value:", imageArray);
-      return;
-    }
-
-    const container = document.querySelector('.portfolio-grid');
-    if (!container) {
-      console.error("❌ Could not find .portfolio-grid");
-      return;
-    }
-
-    const lightbox = document.createElement('div');
-    lightbox.id = 'lightbox';
-    lightbox.className = 'lightbox';
-    document.body.appendChild(lightbox);
-
-    const lightboxImg = document.createElement('img');
-    lightbox.appendChild(lightboxImg);
-
-    imageArray.forEach(url => {
-      const img = document.createElement('img');
-      img.src = url;
-      img.alt = "Makeup Image";
-      img.classList.add('portfolio-item');
-      container.appendChild(img);
-
-      img.addEventListener('click', () => {
-        lightbox.style.display = 'flex';
-        lightboxImg.src = img.src;
-      });
-    });
-
-    lightbox.addEventListener('click', e => {
-      if (e.target !== lightboxImg) {
-        lightbox.style.display = 'none';
+      let data;
+      try {
+        data = JSON.parse(raw);
+        console.log("✅ JSON PARSED SUCCESSFULLY:", data);
+      } catch (e) {
+        console.error("❌ JSON PARSE FAILED:", e);
+        return;
       }
-    });
-  })
-  .catch(error => {
-    console.error("❌ Fetch completely failed:", error);
-  });
 
+      let imageArray;
+
+      if (Array.isArray(data)) {
+        imageArray = data;
+      } else if (data && typeof data === 'object') {
+        console.warn("⚠️ Data is an object. Trying Object.values()...");
+        imageArray = data.images || Object.values(data);
+      } else {
+        console.error("❌ Unexpected data format:", typeof data);
+        return;
+      }
+
+      if (!Array.isArray(imageArray)) {
+        console.error("❌ Still not an array. Final value:", imageArray);
+        return;
+      }
+
+      const container = document.querySelector('.portfolio-grid');
+      if (!container) {
+        console.error("❌ Could not find .portfolio-grid");
+        return;
+      }
+
+      const lightbox = document.createElement('div');
+      lightbox.id = 'lightbox';
+      lightbox.className = 'lightbox';
+      document.body.appendChild(lightbox);
+
+      const lightboxImg = document.createElement('img');
+      lightbox.appendChild(lightboxImg);
+
+      imageArray.forEach(url => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = "Makeup Image";
+        img.classList.add('portfolio-item');
+        container.appendChild(img);
+
+        img.addEventListener('click', () => {
+          lightbox.style.display = 'flex';
+          lightboxImg.src = img.src;
+        });
+      });
+
+      lightbox.addEventListener('click', e => {
+        if (e.target !== lightboxImg) {
+          lightbox.style.display = 'none';
+        }
+      });
+    })
+    .catch(error => {
+      console.error("❌ Fetch completely failed:", error);
+    });
 });
