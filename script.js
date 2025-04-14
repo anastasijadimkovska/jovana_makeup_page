@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // 🎯 Load portfolio images from Google Drive
-  fetch('https://script.google.com/macros/s/AKfycbyvt3Oo_NEnfWA6Y49fLgSipiqkRX6EzeZvb4Fcc01uLqM0g3WgEWLCmGM0eGXtfxxX/exec')
+  fetch('https://corsproxy.io/?https://script.google.com/macros/s/AKfycbyvt3Oo_NEnfWA6Y49fLgSipiqkRX6EzeZvb4Fcc01uLqM0g3WgEWLCmGM0eGXtfxxX/exec')
     .then(res => res.json())
     .then(data => {
       const container = document.querySelector('.portfolio-grid');
