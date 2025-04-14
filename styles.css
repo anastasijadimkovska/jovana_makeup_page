@@ -255,39 +255,52 @@ footer {
     .about-content h2, .about-content p {
         text-align: center;
     }
-
-    #calendlyPopup,
-    #portfolioModal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 95vw;
-        height: 95vh;
-        padding: 10px;
-        overflow-y: auto;
-        border-radius: 10px;
-        background: rgba(0,0,0,0.9);
-        z-index: 9999;
+@media (max-width: 768px) {
+    #portfolioModal,
+    #calendlyPopup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 95vw;
+      height: 95vh;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      z-index: 9999;
+      padding: 0;
+      margin: 0;
     }
-
+  
     .modal-content {
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background: #fff;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      padding: 0;
     }
-
+  
     .modal-content iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-        display: block;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
     }
+  }
+
+iframe {
+  display: block;
+  max-width: 100%;
+  height: 100%;
+}
+
 
     .footer-content {
         flex-direction: column;
